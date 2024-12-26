@@ -1,0 +1,60 @@
+﻿<Window
+    x:Class="SnapShotApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SnapShotApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:SnapShotApp.ViewModels"
+    Title="MainWindow"
+    Width="570"
+    Height="500"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,5,0,5"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <ComboBox
+                Name="cmbSerialPort"
+                Width="200"
+                Margin="10,0,0,0"
+                VerticalContentAlignment="Center"
+                ItemsSource="{Binding SerialPorts}" />
+            <Button
+                Width="80"
+                Margin="10,0,0,0"
+                Command="{Binding ConnectCommand}"
+                CommandParameter="{Binding ElementName=cmbSerialPort, Path=Text}"
+                Content="接続" />
+            <Button
+                Width="80"
+                Margin="10,0,0,0"
+                Command="{Binding DisConnectCommand}"
+                Content="切断" />
+            <Button
+                Width="80"
+                Margin="10,0,0,0"
+                Command="{Binding ShootCommand}"
+                Content="撮影" />
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            Margin="10"
+            BorderBrush="DarkGray"
+            BorderThickness="1">
+            <Image
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Source="{Binding ImageCapture, UpdateSourceTrigger=PropertyChanged}" />
+        </Border>
+    </Grid>
+</Window>
